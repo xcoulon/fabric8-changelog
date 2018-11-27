@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/fabric8-services/fabric8-changelog/cmd/commits"
+	"github.com/fabric8-services/fabric8-changelog/cmd/pulls"
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +15,7 @@ func NewRootCommand() *cobra.Command {
 			// Do Stuff Here
 		},
 	}
-	listCommitsCmd := commits.NewListCommand()
-	rootCmd.AddCommand(listCommitsCmd)
+	listPRsCmd := pulls.NewListMergedPRsCommand()
+	rootCmd.AddCommand(listPRsCmd)
 	return rootCmd
 }
