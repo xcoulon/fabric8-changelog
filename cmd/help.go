@@ -10,6 +10,7 @@ import (
 var helpTemplate = `
 {{if or .Runnable .HasSubCommands}}{{.UsageString}}{{end}}`
 
+// NewHelpCommand returns a new "help" command
 func NewHelpCommand() *cobra.Command {
 	return &cobra.Command{
 		Use:               "help [command]",

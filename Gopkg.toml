@@ -24,6 +24,8 @@
 #   go-tests = true
 #   unused-packages = true
 
+required = [
+]
 
 [prune]
   go-tests = true
@@ -43,6 +45,8 @@
   version = "0.8.0"
 
 [[constraint]]
-  name = "github.com/sirupsen/logrus"
-  version = "1.0.6"
+  name = "github.com/bytesparadise/libasciidoc"
+  version = "v0.1"
+
+
 

@@ -1,0 +1,16 @@
+= The Changelog
+
+`fabric8-changelog` is a CLI utility to query GitHub (using GraphQL API) and ZenHub to:
+
+- list all pull requests that were merged since the date passed with the `since` argument in the command.
+- list all issues in the `In Progress` and `Review/QA` pipelines on https://app.zenhub.com/workspaces/devtools-core-5bdfeabf4b5806bc2bf11714/boards?milestones=Sprint%20160%232019-01-14&filterLogic=any&repos=96831576,139610958,85101045,151805548,152724098,144640567,96795323,110860318,58177665,153406574,155361858,160159637,165234202[ZenHub]
+
+Example:
+----
+go run main.go --since 2019-01-09 --output tmp/changelog-2019-01-02.adoc --format asciidoc fabric8-services/fabric8-tenant,fabric8-services/fabric8-auth,fabric8-services/fabric8-cluster,fabric8-services/fabric8-env,fabric8-services/admin-console,fabric8-services/fabric8-oso-proxy,fabric8-services/fabric8-common,fabric8-services/toolchain-operator,fabric8-services/fabric8-notifications
+----
+
+
+== License
+
+link:LICENSE[Apache 2.0 License].
