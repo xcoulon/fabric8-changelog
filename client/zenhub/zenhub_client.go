@@ -1,4 +1,4 @@
-package cmd
+package zenhub
 
 import (
 	"encoding/json"
@@ -11,7 +11,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-func queryEvents(repoID, number int64, result interface{}) error {
+// QueryIssueEvents retrieves the events for the issue
+func QueryIssueEvents(repoID, number int64, result interface{}) error {
 	req, err := http.NewRequest("GET",
 		fmt.Sprintf("https://api.zenhub.io/p1/repositories/%d/issues/%d/events", repoID, number),
 		nil)
