@@ -48,14 +48,16 @@ func init() {
 
 	renderTmpl = newTextTemplate("report",
 		`Done since last week:
+
 {{ range $name, $prs := .MergedPRs }}* {{ $name }}:
 {{ range $idx, $pr := $prs }}{{ with $pr }}** [{{ .Permalink }}[{{ .Number}}]] {{ .Title }}{{ end }}
 {{ end }}
 {{ end }}
 
 Currently working on:
+
 {{ range $name, $issues := .InProgressIssues }}* {{ $name }}:
-	{{ range $idx, $issue := $issues }}{{ with $issue }}** [{{ .URL }}[{{ .Number}}]] {{ .Title }}{{ end }}
+{{ range $idx, $issue := $issues }}{{ with $issue }}** [{{ .URL }}[{{ .Number}}]] {{ .Title }}{{ end }}
 {{ end }}
 {{ end }}
 `)

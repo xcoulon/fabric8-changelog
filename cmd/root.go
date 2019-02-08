@@ -39,7 +39,7 @@ func init() {
 		"fabric8-services/fabric8-devdoc",
 		"fabric8-services/fabric8-env",
 		"fabric8-services/fabric8-env-client",
-		"fabric8-services/fabric8-notifications",
+		"fabric8-services/fabric8-notification",
 		"fabric8-services/fabric8-oso-proxy",
 		"fabric8-services/fabric8-tenant",
 		"fabric8-services/toolchain-operator",
