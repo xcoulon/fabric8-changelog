@@ -10,6 +10,10 @@ Example:
 go run main.go --since 2019-01-09 --output tmp
 ----
 
+== Requirements
+
+You'll need the following environment variables to access GitHub and ZenHub: `GITHUB_TOKEN` and `ZENHUB_TOKEN`.
+
 
 == License
 
