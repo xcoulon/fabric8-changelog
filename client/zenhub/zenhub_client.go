@@ -32,6 +32,6 @@ func QueryIssueEvents(repoID, number int64, result interface{}) error {
 	if resp.StatusCode != 200 {
 		return errors.Errorf("failed to execute query: %s", string(body))
 	}
-	log.Debugf("raw response: %s", string(body))
+	log.Debugf("raw response for issue %d: %s", number, string(body))
 	return json.Unmarshal(body, result)
 }

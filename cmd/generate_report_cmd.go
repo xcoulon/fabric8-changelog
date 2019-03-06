@@ -500,11 +500,16 @@ func filterInProgressIssues(repoID int64, issues map[int64]MilestoneIssue) error
 		}
 		if len(events) == 0 {
 			// issue is untriagged
+			log.Debugf("issue %d' has not bee triaged yet", number)
 			delete(issues, number)
 			continue
 		}
-		if events[0].ToPipeline.Name != InProgress && events[0].ToPipeline.Name != ReviewQA {
-			delete(issues, number)
+		for _, e := range events {
+			if e.Type == "transferIssue" &&
+				!(e.ToPipeline.Name == InProgress || events[0].ToPipeline.Name == ReviewQA) {
+				log.Debugf("issue %d's last event is not a move in the 'In Progress' pipeline", number)
+				delete(issues, number)
+			}
 		}
 	}
 	return nil
@@ -512,6 +517,7 @@ func filterInProgressIssues(repoID int64, issues map[int64]MilestoneIssue) error
 
 // IssueEvent a single event for an issue on ZenHub
 type IssueEvent struct {
+	Type       string `json:"type"`
 	ToPipeline struct {
 		Name string `json:"name"`
 	} `json:"to_pipeline"`
