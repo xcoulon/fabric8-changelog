@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"fmt"
 	"io"
 	"os"
 	"sort"
@@ -23,7 +24,7 @@ import (
 )
 
 var since string
-var outputLocation string
+var outputDir string
 var outputFormat string
 
 // NewGenerateReportCommand generates a new report
@@ -36,7 +37,7 @@ func NewGenerateReportCommand() *cobra.Command {
 	}
 	c.Flags().StringSliceVarP(&repos, "repositories", "r", defaultRepos, "the repositories on which the milestone will be created")
 	c.Flags().StringVarP(&since, "since", "s", "", "the date after which PRs were merged (format: '2006-01-02')")
-	c.Flags().StringVarP(&outputLocation, "output", "o", "", "the output location('-' for stdout)")
+	c.Flags().StringVarP(&outputDir, "output", "o", "tmp", "the output directory, or '-' for stdout")
 	c.Flags().StringVarP(&outputFormat, "format", "f", "html", "the output format ('asciidoc' or 'html' - default 'html')")
 
 	return c
@@ -75,7 +76,11 @@ func generateReport(cmd *cobra.Command, args []string) error {
 
 	// output the final result
 	// generate
-	output, close := getOut(cmd, outputLocation)
+	output, close, err := getOut(cmd, outputDir, time.Now().Format("2006-01-02"), outputFormat)
+	if err != nil {
+		return errors.Wrap(err, "failed to render report")
+	}
+
 	defer close()
 	data := struct {
 		MergedPRs        map[string]map[int64]PullRequest
@@ -116,17 +121,24 @@ func newCloseFileFunc(c io.Closer) closeFunc {
 	}
 }
 
-func getOut(cmd *cobra.Command, outputName string) (io.Writer, closeFunc) {
-	if outputName == "-" {
+func getOut(cmd *cobra.Command, outputDir, outputDate, outputFormat string) (io.Writer, closeFunc, error) {
+	if outputDir == "-" {
 		// outfile is STDOUT
-		return cmd.OutOrStdout(), defaultCloseFunc()
+		return cmd.OutOrStdout(), defaultCloseFunc(), nil
+	}
+	// check of the output dir needs to be created
+	if _, err := os.Stat(outputDir); err != nil {
+		err = os.Mkdir(outputDir, os.ModeDir+os.ModePerm)
+		if err != nil {
+			return nil, nil, err
+		}
 	}
 	// outfile is specified in the command line
-	outfile, e := os.Create(outputName)
-	if e != nil {
-		log.Warnf("Cannot create output file - %v", outputName)
+	outfile, err := os.Create(fmt.Sprintf("%s/changelog-%s.%s", outputDir, outputDate, outputFormat))
+	if err != nil {
+		return nil, nil, err
 	}
-	return outfile, newCloseFileFunc(outfile)
+	return outfile, newCloseFileFunc(outfile), nil
 }
 
 var fetchPullRequestsTmpl template.Template

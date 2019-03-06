@@ -7,7 +7,7 @@
 
 Example:
 ----
-go run main.go --since 2019-01-09 --output tmp/changelog-2019-01-02.adoc --format asciidoc fabric8-services/fabric8-tenant,fabric8-services/fabric8-auth,fabric8-services/fabric8-cluster,fabric8-services/fabric8-env,fabric8-services/admin-console,fabric8-services/fabric8-oso-proxy,fabric8-services/fabric8-common,fabric8-services/toolchain-operator,fabric8-services/fabric8-notifications
+go run main.go --since 2019-01-09 --output tmp
 ----
 
 
