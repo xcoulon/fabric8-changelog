@@ -43,6 +43,10 @@ func init() {
 		"fabric8-services/fabric8-oso-proxy",
 		"fabric8-services/fabric8-tenant",
 		"fabric8-services/toolchain-operator",
+		"codeready-toolchain/toolchain-common",
+		"codeready-toolchain/member-operator",
+		"codeready-toolchain/host-operator",
+		"codeready-toolchain/api",
 	}
 }
 
