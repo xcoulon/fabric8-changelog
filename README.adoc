@@ -7,7 +7,7 @@
 
 Example:
 ----
-go run main.go --since 2019-01-09 --output tmp
+go run main.go report --since 2019-01-09 --output tmp
 ----
 
 == Requirements
